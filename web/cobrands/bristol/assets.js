@@ -46,10 +46,17 @@ fixmystreet.assets.add($.extend({}, options, {
 }));
 
 fixmystreet.assets.add($.extend({}, options, {
-    asset_category: "Street Lighting",
+    // wfs_url: "https://confirmdev.eu.ngrok.io/bristol/arcgis/services/ext/datagov/MapServer/WFSServer",
+    wfs_url: "https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer",
+    wfs_feature: "ext_datagov:Streetlights",
+    asset_category: "Street Light",
     asset_item: 'street light',
-    filter_key: 'COD_ASSET_TYPE',
-    filter_value: 'SL'
+    asset_id_field: 'Asset_number',
+    propertyNames: [ 'Asset_number', 'USRN', 'Unit_ID' ],
+    attributes: {
+        asset_id: 'Asset_number',
+        usrn: 'USRN'
+    }
 }));
 
 })();
