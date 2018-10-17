@@ -11,11 +11,11 @@ fixmystreet.roadworks.display_message = function(feature) {
         tooltip = attr.tooltip.replace(/\\n/g, '\n'),
         desc = attr.works_desc.replace(/\\n/g, '\n');
 
-        var $msg = $('<div class="js-roadworks-message box-warning"><p>Roadworks are scheduled near this location, so you may not need to report your issue.</p></div>');
+        var $msg = $('<div class="js-roadworks-message box-warning"><h3>Roadworks are scheduled near this location, so you may not need to report your issue.</h3></div>');
         var $dl = $("<dl></dl>").appendTo($msg);
-        $dl.append("<dt>Dates</dt>");
+        $dl.append("<dt>Dates:</dt>");
         $dl.append($("<dd></dd>").text(start + " until " + end));
-        $dl.append("<dt>Summary</dt>");
+        $dl.append("<dt>Summary:</dt>");
         var $summary = $("<dd></dd>").appendTo($dl);
         tooltip.split("\n").forEach(function(para) {
             if (para.match(/^(\d{2}\s+\w{3}\s+(\d{2}:\d{2}\s+)?\d{4}( - )?){2}/)) {
@@ -29,9 +29,10 @@ fixmystreet.roadworks.display_message = function(feature) {
             $summary.append(para).append("<br />");
         });
         if (desc) {
-            $dl.append("<dt>Description</dt>");
+            $dl.append("<dt>Description:</dt>");
             $dl.append($("<dd></dd>").text(desc));
         }
+        $dl.append($("<p>If you think this issue needs immediate attention you can continue your report below</p>"));
 
         $('.change_location').after($msg);
 };
