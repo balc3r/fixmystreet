@@ -100,33 +100,6 @@ $mech->not_logged_in_ok;
     $mech->log_out_ok;
 }
 
-foreach my $remember_me ( '1', '0' ) {
-    subtest "sign in using valid details (remember_me => '$remember_me')" => sub {
-        $mech->get_ok('/auth');
-        $mech->submit_form_ok(
-            {
-                form_name => 'general_auth',
-                fields    => {
-                    username => $test_email,
-                    password_sign_in => $test_password,
-                    remember_me => ( $remember_me ? 1 : undef ),
-                },
-                button => 'sign_in_by_password',
-            },
-            "sign in with '$test_email' & '$test_password'"
-        );
-        is $mech->uri->path, '/my', "redirected to correct page";
-
-        my $expiry = $mech->session_cookie_expiry;
-        $remember_me
-          ? cmp_ok( $expiry, '>', 86400, "long expiry time" )
-          : is( $expiry, 0, "no expiry time" );
-
-        # logout
-        $mech->log_out_ok;
-    };
-}
-
 # try to sign in with bad details
 $mech->get_ok('/auth');
 $mech->submit_form_ok(

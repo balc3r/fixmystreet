@@ -118,7 +118,6 @@ foreach my $test (
             phone         => '',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -146,7 +145,6 @@ foreach my $test (
             category      => 'Something bad',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             category => '-- Pick a category --',
@@ -176,7 +174,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -203,7 +200,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -230,7 +226,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -256,7 +251,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -282,7 +276,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             title => 'Dog poo on walls',
@@ -308,7 +301,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -333,7 +325,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {},
         errors  => [
@@ -358,7 +349,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => { username => 'notanemail', email => 'notanemail' },
         errors  => [ 'Please enter a valid email', ],
@@ -380,7 +370,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             title  => 'Test title',
@@ -408,7 +397,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             name  => 'Bob Jones',
@@ -434,7 +422,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             photo1 => '',
@@ -458,7 +445,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             photo1 => '',
@@ -482,7 +468,6 @@ foreach my $test (
             category      => 'Street lighting',
             password_sign_in => '',
             password_register => '',
-            remember_me => undef,
         },
         changes => {
             photo1 => '',
