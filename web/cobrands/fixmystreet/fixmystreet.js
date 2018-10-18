@@ -890,6 +890,11 @@ $.extend(fixmystreet.set_up, {
                 fixmystreet.map.setCenter(
                     marker.geometry.getBounds().getCenterLonLat(),
                     fixmystreet.map.getNumZoomLevels() - 1 );
+                history.pushState({
+                    reportId: reportId,
+                    reportPageUrl: reportPageUrl,
+                    mapState: fixmystreet.maps.get_map_state()
+                }, null);
             }
             return;
         }
@@ -901,7 +906,8 @@ $.extend(fixmystreet.set_up, {
             if ('pushState' in history) {
                 history.pushState({
                     reportId: reportId,
-                    reportPageUrl: reportPageUrl
+                    reportPageUrl: reportPageUrl,
+                    mapState: fixmystreet.maps.get_map_state()
                 }, null, reportPageUrl);
             }
         });
@@ -1401,6 +1407,10 @@ $(function() {
                     // This popstate was just here because the hash changed.
                     // (eg: mobile nav click.) We want to ignore it.
                 }
+                if ('mapState' in e.state) {
+                    fixmystreet.maps.set_map_state(e.state.mapState);
+                }
+
             });
         }, 0);
     });
