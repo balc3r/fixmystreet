@@ -872,6 +872,8 @@ $.extend(fixmystreet.set_up, {
   },
 
   ajax_history: function() {
+    var around_map_state = null;
+
     $('#map_sidebar').on('click', '.item-list--reports a', function(e) {
         if (e.metaKey || e.ctrlKey) {
             return;
@@ -903,11 +905,12 @@ $.extend(fixmystreet.set_up, {
             // Since this navigation was the result of a user action,
             // we want to record the navigation as a state, so the user
             // can return to it later using their Back button.
+            around_map_state = fixmystreet.maps.get_map_state();
             if ('pushState' in history) {
                 history.pushState({
                     reportId: reportId,
                     reportPageUrl: reportPageUrl,
-                    mapState: fixmystreet.maps.get_map_state()
+                    mapState: around_map_state
                 }, null, reportPageUrl);
             }
         });
@@ -925,7 +928,13 @@ $.extend(fixmystreet.set_up, {
             // we want to record the navigation as a state, so the user
             // can return to it later using their Back button.
             if ('pushState' in history) {
-                history.pushState({ initial: true }, null, reportListUrl);
+                history.pushState({
+                    initial: true,
+                    mapState: around_map_state
+                }, null, reportListUrl);
+            }
+            if (around_map_state) {
+                fixmystreet.maps.set_map_state(around_map_state);
             }
         });
     });
