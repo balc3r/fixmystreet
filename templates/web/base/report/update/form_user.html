@@ -1,4 +1,3 @@
-<div id="js-private_form">
 [% IF NOT c.cobrand.social_auth_enabled OR c.user_exists # Not logged in, with social auth, handled in loggedout.html %]
     <div class="hidden-nojs">
         <button id="js-new-report-user-show" class="btn btn--provide-update js-new-report-user-hidden">[% loc('Continue') %]</button>
@@ -9,12 +8,17 @@
 [% END %]
 
 [% IF c.user_exists %]
-  [% PROCESS "report/new/form_user_loggedin.html" %]
+    [% PROCESS "report/update/form_user_loggedin.html" %]
+[% ELSIF oauth_need_email %]
+    [% PROCESS 'report/form/user_loggedout_email.html' type='update' object=update required=1 %]
+    <div id="form_sign_in">
+        [% PROCESS 'report/form/user_loggedout_by_email.html' object=update type='update' valid_class='validNameU' %]
+        <input type="hidden" name="oauth_need_email" value="1">
+    </div>
 [% ELSE %]
-  [% PROCESS "report/form/user_loggedout.html" type='report' object=report %]
+    [% PROCESS "report/form/user_loggedout.html" type='update' object=update %]
 [% END %]
 
 [% IF NOT c.cobrand.social_auth_enabled OR c.user_exists %]
     </div>
 [% END %]
-</div>

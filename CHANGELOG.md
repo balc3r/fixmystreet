@@ -7,6 +7,7 @@
         - Allow cobrands to limit contact form to abuse reports only
     - Front end improvements:
         - Clearer relocation options while you’re reporting a problem #2238
+        - Simplify new report/update sign in flow. #642
     - Admin improvements:
         - List number of alerts on report page #669
         - viewing and managing of user alerts in admin #676

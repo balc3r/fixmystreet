@@ -803,19 +803,55 @@ $.extend(fixmystreet.set_up, {
   },
 
   email_login_form: function() {
-    // Log in with email button
-    var email_form = $('#js-social-email-hide'),
-        button = $('<button class="btn btn--social btn--social-email">'+translation_strings.login_with_email+'</button>'),
-        form_box = $('<div class="form-box"></div>');
-    button.click(function(e) {
+    // Display tweak
+    $('.js-new-report-sign-in-hidden.form-box, .js-new-report-sign-in-shown.form-box').removeClass('form-box');
+
+    $('#js-new-report-user-hide').click(function(e) {
         e.preventDefault();
-        email_form.fadeIn(500);
-        form_box.hide();
+        $('.js-new-report-user-shown').hide();
+        $('.js-new-report-user-hidden').show();
     });
-    form_box.append(button).insertBefore(email_form);
-    if ($('.form-error').length) {
-        button.click();
+    $('#js-new-report-user-show').click(function(e) {
+        e.preventDefault();
+        if (!$(this).closest('form').validate().form()) {
+            return;
+        }
+        $('.js-new-report-user-shown').show().css('visibility', 'visible').focus();
+        $('.js-new-report-user-hidden').hide();
+    });
+
+    $('#js-new-report-show-sign-in').click(function(e) {
+        $('.js-new-report-sign-in-shown').show().css('visibility', 'visible');
+        $('#form_username').focus();
+        $('.js-new-report-sign-in-hidden').hide();
+    });
+
+    $('#js-new-report-hide-sign-in').click(function(e) {
+        e.preventDefault();
+        $('.js-new-report-sign-in-shown').hide();
+        $('.js-new-report-sign-in-hidden').show();
+    });
+
+    $('#js-new-report-sign-in-forgotten').click(function() {
+        $('.js-new-report-sign-in-shown').hide();
+        $('.js-new-report-sign-in-hidden').show();
+        $('.js-new-report-forgotten-shown').show().css('visibility', 'visible');
+        $('.js-new-report-forgotten-hidden').hide();
+    });
+
+    var err = $('.form-error');
+    if (err.length) {
+        if (err.closest(".js-new-report-sign-in-shown").length) {
+            $('.js-new-report-user-shown').show().css('visibility', 'visible');
+            $('.js-new-report-user-hidden').hide();
+            $('.js-new-report-sign-in-shown').show().css('visibility', 'visible');
+            $('.js-new-report-sign-in-hidden').hide();
+        } else if (err.closest('.js-new-report-sign-in-hidden, .js-new-report-user-shown').length) {
+            $('.js-new-report-user-shown').show().css('visibility', 'visible');
+            $('.js-new-report-user-hidden').hide();
+        }
     }
+
   },
 
   reporting_hide_phone_email: function() {

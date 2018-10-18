@@ -1,4 +1,5 @@
 [% IF c.cobrand.social_auth_enabled %]
+  <div class="js-new-report-user-hidden">
   [% IF c.config.FACEBOOK_APP_ID %]
     <div class="form-box">
     <button name="facebook_sign_in" id="facebook_sign_in" value="facebook_sign_in" class="btn btn--block btn--social btn--facebook">
@@ -15,14 +16,34 @@
     </button>
     </div>
   [% END %]
-    <div id="js-social-email-hide">
+    <div class="form-box hidden-nojs">
+        <button id="js-new-report-user-show" class="btn btn--social btn--social-email">[% loc('Log in with email') %]</button>
+    </div>
+  </div>
+    <button id="js-new-report-hide-sign-in" class="btn btn--provide-update hidden-nojs hidden-js js-new-report-sign-in-shown">[% loc('Back') %]</button>
+    <div class="hidden-js js-new-report-user-shown">
+        <button id="js-new-report-user-hide" class="btn btn--provide-update js-new-report-user-shown js-new-report-sign-in-hidden">[% loc('Back') %]</button>
+[% END %]
+
+<div id="form_sign_in">
+    <div class="hidden-nojs js-new-report-sign-in-hidden">
+        <p style="display:flex;">
+        <span style="flex: 1 0 0">Tell us about yourself or</span>
+        <a style="flex: 1 0 0" id="js-new-report-show-sign-in">sign in with password to prefill this information</a></span>
+        </p>
+    </div>
+
+[% IF type == 'report' %]
+    [% PROCESS 'report/form/private_details.html' %]
+[% END %]
+
+[% IF c.cobrand.social_auth_enabled %]
     [% PROCESS 'report/form/user_loggedout_email.html' required=0 %]
 [% ELSE %]
     [% PROCESS 'report/form/user_loggedout_email.html' required=1 %]
 [% END %]
 
-<div id="form_sign_in">
-    <h2>[% tprintf(loc("Do you have a %s password?", "%s is the site name"), site_name) %]</h2>
+    <h2 class="hidden-js">[% tprintf(loc("Do you have a %s password?", "%s is the site name"), site_name) %]</h2>
     [% PROCESS 'report/form/user_loggedout_password.html' %]
     [% PROCESS 'report/form/user_loggedout_by_email.html' %]
 </div>
