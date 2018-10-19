@@ -901,11 +901,13 @@ $.extend(fixmystreet.set_up, {
             return;
         }
 
+        if (fixmystreet.page === 'reports') {
+            around_map_state = fixmystreet.maps.get_map_state();
+        }
         fixmystreet.display.report(reportPageUrl, reportId, function() {
             // Since this navigation was the result of a user action,
             // we want to record the navigation as a state, so the user
             // can return to it later using their Back button.
-            around_map_state = fixmystreet.maps.get_map_state();
             if ('pushState' in history) {
                 history.pushState({
                     reportId: reportId,
