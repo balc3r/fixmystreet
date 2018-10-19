@@ -915,6 +915,17 @@ OpenLayers.Control.PermalinkFMS = OpenLayers.Class(OpenLayers.Control.Permalink,
         else {
             this.element.href = href;
         }
+
+        if ('replaceState' in history) {
+            if (fixmystreet.page === 'around') {
+                // around is the only page that restores map correctly from request params for now
+                history.replaceState(
+                    history.state,
+                    null,
+                    href
+                );
+            }
+        }
     },
     updateLink: function() {
         this._updateLink(0);
