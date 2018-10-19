@@ -9,8 +9,9 @@
         - Clearer relocation options while you’re reporting a problem #2238
     - Admin improvements:
         - List number of alerts on report page #669
-        - viewing and managing of user alerts in admin #676
+        - Viewing and managing of user alerts in admin #676
         - Allow moderation to potentially change photos. #2291
+        - Track map state in URL to make sharing links easier. #2242
     - Bugfixes:
         - Add perl 5.26/5.28 support.
         - Fix subcategory issues when visiting /report/new directly #2276
