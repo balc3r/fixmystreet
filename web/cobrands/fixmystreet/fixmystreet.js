@@ -901,7 +901,7 @@ $.extend(fixmystreet.set_up, {
             return;
         }
 
-        if (fixmystreet.page === 'reports') {
+        if (fixmystreet.page === 'reports' || fixmystreet.page === 'around') {
             around_map_state = fixmystreet.maps.get_map_state();
         }
         fixmystreet.display.report(reportPageUrl, reportId, function() {
