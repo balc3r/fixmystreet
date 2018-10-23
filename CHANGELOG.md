@@ -16,6 +16,7 @@
         - Fix subcategory issues when visiting /report/new directly #2276
         - Give superusers access to update staff dropdowns. #2286
         - Update report areas when moving its location. #2181
+        - Don't require two taps on reports in list on iOS. #2294
     - Development improvements:
         - Add cobrand hook for dashboard viewing permission. #2285
         - Have body.url work in hashref lookup. #2284

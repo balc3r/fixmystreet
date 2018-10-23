@@ -11,6 +11,112 @@ $mappage-actions-width--medium: 20em;
 $header-top-border-width: 0.25em !default;
 $header-top-border: $header-top-border-width solid $primary !default;
 
+// hover styles migrated from _base.scss, included at the top here so hover
+// styles further down take precedence
+$itemlist_item_background_hover: #e6e6e6 !default; // duplicated from _base.scss :(
+
+a:hover {
+  text-decoration: underline;
+  color: #0D7CCE;
+}
+
+div.form-error,
+p.form-error {
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+#report-cta:hover {
+  text-decoration: none;
+  background-color: $nav_fg_hover;
+}
+
+.nav-menu {
+  a:hover {
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+  }
+  span.report-a-problem-btn:hover {
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+#key-tools {
+  a, button {
+    &:hover, &.hover {
+      text-decoration:none;
+      background-color:#333;
+      color: #fff !important;
+    }
+  }
+}
+
+.item-list--wards__item, .item-list--reports__item {
+  a:hover, a:focus, &.hovered a {
+    background-color: $itemlist_item_background_hover;
+    text-decoration: none;
+  }
+}
+
+// Trigger hover style even when hovering over sibling item-action-button
+.item-list__item--indented:hover a {
+  background-color: $itemlist_item_background_hover;
+}
+
+.update-img a:hover span {
+  opacity: 1;
+}
+
+.problem-back:hover {
+  color: #666;
+}
+
+.sub-map-links a:hover {
+  background-color: #000;
+  text-decoration: none;
+}
+
+.alert a:hover {
+  color:$primary;
+}
+
+.pagination a:hover {
+  text-decoration:none;
+  background:$primary/1.1;
+}
+
+#front-main {
+  #postcodeForm div input#sub:hover {
+    background:#333;
+  }
+
+  a#geolocate_link:hover {
+    text-decoration:none;
+    background:#2a2a2a;
+  }
+}
+
+.confirmation-header h1 a:hover {
+  text-decoration: none;
+  color: #0BA7D1; // default link colour
+}
+
+
+$nicetable-hover-background: rgba($primary, 0.15) !default; // duplicated from _base.scss :(
+.nicetable.hover {
+  tr:hover {
+    background: $nicetable-hover-background;
+  }
+
+  thead tr:hover {
+    background: transparent;
+  }
+}
+
 .internal-link-fixed-header {
     display: block;
     position: relative;
