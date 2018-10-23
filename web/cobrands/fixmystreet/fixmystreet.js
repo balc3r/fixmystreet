@@ -901,7 +901,7 @@ $.extend(fixmystreet.set_up, {
             return;
         }
 
-        if (fixmystreet.page === 'reports' || fixmystreet.page === 'around') {
+        if (fixmystreet.page.match(/reports|around|my/)) {
             around_map_state = fixmystreet.maps.get_map_state();
         }
         fixmystreet.display.report(reportPageUrl, reportId, function() {
@@ -912,7 +912,7 @@ $.extend(fixmystreet.set_up, {
                 history.pushState({
                     reportId: reportId,
                     reportPageUrl: reportPageUrl,
-                    mapState: around_map_state
+                    mapState: fixmystreet.maps.get_map_state()
                 }, null, reportPageUrl);
             }
         });
