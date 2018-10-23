@@ -548,8 +548,8 @@ $.extend(fixmystreet.utils, {
                     f.geometry = new_geometry;
                     this.removeAllFeatures();
                     this.addFeatures([f]);
-                    var qs = fixmystreet.utils.parse_query_string();
-                    if (!qs.bbox) {
+                    var qs = OpenLayers.Util.getParameters(fixmystreet.original.href);
+                    if (!qs.bbox && !qs.lat && !qs.lon) {
                         zoomToBounds(extent);
                     }
                 } else {
@@ -917,8 +917,7 @@ OpenLayers.Control.PermalinkFMS = OpenLayers.Class(OpenLayers.Control.Permalink,
         }
 
         if ('replaceState' in history) {
-            if (fixmystreet.page === 'around') {
-                // around is the only page that restores map correctly from request params for now
+            if (fixmystreet.page.match(/around|reports/)) {
                 history.replaceState(
                     history.state,
                     null,
