@@ -839,17 +839,20 @@ $.extend(fixmystreet.utils, {
             $(fixmystreet).trigger('maps:update_view');
         });
 
-        (function() {
-            var timeout;
-            $('#js-reports-list').on('mouseenter', '.item-list--reports__item', function(){
-                var href = $('a', this).attr('href');
-                var id = parseInt(href.replace(/^.*[\/]([0-9]+)$/, '$1'),10);
-                clearTimeout(timeout);
-                fixmystreet.maps.markers_highlight(id);
-            }).on('mouseleave', '.item-list--reports__item', function(){
-                timeout = setTimeout(fixmystreet.maps.markers_highlight, 50);
-            });
-        })();
+        if (!$("html").hasClass("mobile")) {
+            // On mobile go straight to the report
+            (function() {
+                var timeout;
+                $('#js-reports-list').on('mouseenter', '.item-list--reports__item', function(){
+                    var href = $('a', this).attr('href');
+                    var id = parseInt(href.replace(/^.*[\/]([0-9]+)$/, '$1'),10);
+                    clearTimeout(timeout);
+                    fixmystreet.maps.markers_highlight(id);
+                }).on('mouseleave', '.item-list--reports__item', function(){
+                    timeout = setTimeout(fixmystreet.maps.markers_highlight, 50);
+                });
+            })();
+        }
     });
 
 // End maps closure
