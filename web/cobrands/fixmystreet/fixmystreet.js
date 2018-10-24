@@ -312,16 +312,12 @@ $.extend(fixmystreet.set_up, {
       });
     });
 
-    /* set correct required status depending on what we submit
-    * NB: need to add things to form_category as the JS updating
-    * of this we do after a map click removes them */
+    /* set correct required status depending on what we submit */
     $('.js-submit_sign_in').click( function(e) {
-        $('#form_category').addClass('required validCategory').removeClass('valid');
         $('.js-form-name').removeClass('required');
     } );
 
     $('.js-submit_register').click( function(e) {
-        $('#form_category').addClass('required validCategory').removeClass('valid');
         $('.js-form-name').addClass('required');
     } );
 
