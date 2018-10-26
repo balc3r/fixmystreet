@@ -631,7 +631,7 @@ foreach my $test (
 
         # submit initial pc form
         FixMyStreet::override_config {
-            ALLOWED_COBRANDS => [ { fixmystreet => '.' } ],
+            ALLOWED_COBRANDS => [ { fixmystreet => '.' }, 'bromley', 'oxfordshire', 'rutland', 'lincolnshire', 'buckinghamshire' ],
             MAPIT_URL => 'http://mapit.uk/',
         }, sub {
             $mech->submit_form_ok( { with_fields => { pc => $test->{pc} } },
