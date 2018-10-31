@@ -43,6 +43,9 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
     non_interactive: true,
     road: true,
     all_categories: true,
+    // motorways are wide and the lines to define them are narrow so we
+    // need a bit more margin for error in finding the nearest to stop
+    // clicking in the middle of them being undetected
     nearest_radius: 15,
     actions: {
         found: function(layer, feature) {
