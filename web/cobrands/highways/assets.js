@@ -16,7 +16,7 @@ var defaults = {
     },
     format_class: OpenLayers.Format.GML.v3.MultiCurveFix,
     asset_type: 'area',
-    max_resolution: 4.777314267158508,
+    max_resolution: 8.777314267158508,
     min_resolution: 0.5971642833948135,
     asset_id_field: 'CENTRAL_AS',
     geometryName: 'msGeometry',
