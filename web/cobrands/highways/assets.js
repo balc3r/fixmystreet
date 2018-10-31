@@ -41,7 +41,6 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
     always_visible: true,
 
     non_interactive: true,
-    asset_type: 'area',
     road: true,
     all_categories: true,
     nearest_radius: 15,
