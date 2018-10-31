@@ -47,16 +47,14 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
     nearest_radius: 15,
     actions: {
         found: function(layer, feature) {
-            // this is to stop this firing when we change category
-            if ( fixmystreet.body_overrides.highways_override ) {
-                // but if we've changed location then we want to reset things
-                var lat = $('#fixmystreet\\.latitude').val(),
-                    lon = $('#fixmystreet\\.longitude').val();
-                if ( lat == fixmystreet.body_overrides.location.latitude &&
-                     lon == fixmystreet.body_overrides.location.longitude ) {
-                    return;
-                }
-                fixmystreet.body_overrides.highways_override = false;
+            // if we've changed location then we want to reset things otherwise
+            // this is probably just being called again by a category change
+            var lat = $('#fixmystreet\\.latitude').val(),
+                lon = $('#fixmystreet\\.longitude').val();
+            if ( fixmystreet.body_overrides.location &&
+                 lat == fixmystreet.body_overrides.location.latitude &&
+                 lon == fixmystreet.body_overrides.location.longitude ) {
+                return;
             }
             $('#highways').remove();
             if ( !fixmystreet.assets.selectedFeature() ) {
@@ -65,7 +63,7 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
             }
         },
         not_found: function(layer) {
-            fixmystreet.body_overrides.highways_override = false;
+            fixmystreet.body_overrides.location = null;
             fixmystreet.body_overrides.remove_only_send();
             $('#highways').remove();
         }
@@ -73,40 +71,41 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
 }));
 
 function add_highways_warning(road_name) {
-  var $warning = $('<div class="box-warning" id="highways"><p>It looks like you clicked on the ' + road_name + ' which is managed by <strong>Highways England</strong>.<p></div>');
-    $('<a>')
-        .attr('href', '#')
-        .attr('id', 'js-not-highways')
-        .html('Send to <strong>' + fixmystreet.bodies.join('</strong> ' + translation_strings.or + ' <strong>') + '</strong> instead.')
+  var $warning = $('<div class="box-warning" id="highways"><p>It looks like you clicked on the <strong>' + road_name + '</strong> which is managed by <strong>Highways England</strong>. ' +
+                   'Does your report concern something on this road, or somewhere else (e.g a road crossing it)?<p></div>');
+    $('<input>')
+        .attr('type', 'radio')
+        .attr('name', 'highways-choice')
+        .attr('id', 'js-highways')
+        .prop('checked', true)
         .on('click', function() {
-            fixmystreet.body_overrides.highways_override = true;
+            fixmystreet.body_overrides.location = null;
+            fixmystreet.body_overrides.only_send('Highways England');
+        })
+        .appendTo($warning);
+    $('<label>')
+        .attr('for', 'js-highways')
+        .text('On the ' + road_name)
+        .addClass('inline')
+        .appendTo($warning);
+    $('<input>')
+        .attr('type', 'radio')
+        .attr('name', 'highways-choice')
+        .attr('id', 'js-not-highways')
+        .on('click', function() {
             fixmystreet.body_overrides.location = {
                 latitude: $('#fixmystreet\\.latitude').val(),
                 longitude: $('#fixmystreet\\.longitude').val()
             };
             fixmystreet.body_overrides.remove_only_send();
-            $('#highways').remove();
-            add_highways_reset(road_name);
         })
         .appendTo($warning);
+    $('<label>')
+        .attr('for', 'js-not-highways')
+        .text('Somewhere else')
+        .addClass('inline')
+        .appendTo($warning);
     $('.change_location').after($warning);
-}
-
-function add_highways_reset(road_name) {
-  var $not_highways = $('<div class="box-warning" id="highways"><p>Although you are reporting a problem near the ' + road_name + ' which is managed by <strong>Highways England</strong> you&rsquo;ve indicated you want to send the report to <strong>' + fixmystreet.bodies.join('</strong> ' + translation_strings.or + ' <strong>') + '</strong>.<p></div>');
-    $('<a>')
-        .attr('href', '#')
-        .attr('id', 'js-is-highways')
-    .html('Send to <strong>Highways England</strong> instead.')
-        .on('click', function() {
-            fixmystreet.body_overrides.highways_override = false;
-            fixmystreet.body_overrides.location = null;
-            fixmystreet.body_overrides.only_send('Highways England');
-            $('#highways').remove();
-            add_highways_warning(road_name);
-        })
-        .appendTo($not_highways);
-    $('.change_location').after($not_highways);
 }
 
 })();
