@@ -1,23 +1,13 @@
 package FixMyStreet::SendReport::Email::Highways;
 
+# this is more or less the same code as the TfL one
+
 use Moo;
-extends 'FixMyStreet::SendReport::Email';
+extends 'FixMyStreet::SendReport::Email::SingleBodyOnly';
 
-sub build_recipient_list {
-    my ( $self, $row, $h ) = @_;
-
-    return unless @{$self->bodies} == 1;
-    my $body = $self->bodies->[0];
-
-    # We don't care what the category was, look up the Pothole contact
-    my $contact = $row->result_source->schema->resultset("Contact")->not_deleted->find({
-        body_id => $body->id,
-        category => 'Pothole',
-    });
-    return unless $contact;
-
-    @{$self->to} = map { [ $_, $body->name ] } split /,/, $contact->email;
-    return 1;
-}
+has contact => (
+    is => 'ro',
+    default => 'Pothole'
+);
 
 1;
