@@ -77,6 +77,8 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
 function add_highways_warning(road_name) {
   var $warning = $('<div class="box-warning" id="highways"><p>It looks like you clicked on the <strong>' + road_name + '</strong> which is managed by <strong>Highways England</strong>. ' +
                    'Does your report concern something on this road, or somewhere else (e.g a road crossing it)?<p></div>');
+  var $radios = $('<p class="segmented-control segmented-control--radio"></p>');
+
     $('<input>')
         .attr('type', 'radio')
         .attr('name', 'highways-choice')
@@ -86,12 +88,12 @@ function add_highways_warning(road_name) {
             fixmystreet.body_overrides.location = null;
             fixmystreet.body_overrides.only_send('Highways England');
         })
-        .appendTo($warning);
+        .appendTo($radios);
     $('<label>')
         .attr('for', 'js-highways')
         .text('On the ' + road_name)
-        .addClass('inline')
-        .appendTo($warning);
+        .addClass('btn')
+        .appendTo($radios);
     $('<input>')
         .attr('type', 'radio')
         .attr('name', 'highways-choice')
@@ -103,12 +105,13 @@ function add_highways_warning(road_name) {
             };
             fixmystreet.body_overrides.remove_only_send();
         })
-        .appendTo($warning);
+        .appendTo($radios);
     $('<label>')
         .attr('for', 'js-not-highways')
         .text('Somewhere else')
-        .addClass('inline')
-        .appendTo($warning);
+        .addClass('btn')
+        .appendTo($radios);
+    $radios.appendTo($warning);
     $('.change_location').after($warning);
 }
 
