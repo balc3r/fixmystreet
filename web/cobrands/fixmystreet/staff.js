@@ -456,7 +456,7 @@ $(fixmystreet).on('report_new:category_change', function(evt, $this) {
     var role = $this.data('role');
     var body = $this.data('body');
 
-    if (prefill_reports && role == 'inspector') {
+    if (prefill_reports) {
         var title = 'A ' + category + ' problem has been found';
         var description = 'A ' + category + ' problem has been found by ' + body;
 
