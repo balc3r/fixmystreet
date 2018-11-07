@@ -14,7 +14,7 @@ sub build_recipient_list {
     return unless @{$self->bodies} == 1;
     my $body = $self->bodies->[0];
 
-    # We don't care what the category was, look up the Traffic lights contact
+    # We don't care what the category was, look up the relevant contact
     my $contact = $row->result_source->schema->resultset("Contact")->not_deleted->find({
         body_id => $body->id,
         category => $self->contact,
