@@ -156,6 +156,18 @@ function is_only_body(body) {
     return false;
 }
 
+$(fixmystreet).on('report_new:highways_change', function() {
+    if (fixmystreet.body_overrides.get_only_send() === 'Highways England') {
+        hide_responsibility_errors();
+        enable_report_form();
+        $('#bucks_dangerous_msg').hide();
+    } else {
+        $('#bucks_dangerous_msg').show();
+        $(fixmystreet).trigger('report_new:category_change', [ $('#form_category') ]);
+    }
+});
+
+
 fixmystreet.assets.add($.extend(true, {}, defaults, {
     http_options: {
         params: {
@@ -172,6 +184,9 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
     all_categories: true,
     actions: {
         found: function(layer, feature) {
+            if (fixmystreet.body_overrides.get_only_send() === 'Highways England') {
+                return;
+            }
             fixmystreet.body_overrides.allow_send(layer.fixmystreet.body);
             fixmystreet.body_overrides.remove_only_send();
             if (fixmystreet.assets.selectedFeature()) {
@@ -200,7 +215,10 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
             // unless an asset is selected.
             fixmystreet.body_overrides.do_not_send(layer.fixmystreet.body);
             fixmystreet.body_overrides.remove_only_send();
-            if (fixmystreet.assets.selectedFeature()) {
+            if (fixmystreet.body_overrides.get_only_send() === 'Highways England') {
+                hide_responsibility_errors();
+                enable_report_form();
+            } else if (fixmystreet.assets.selectedFeature()) {
                 fixmystreet.body_overrides.allow_send(layer.fixmystreet.body);
                 hide_responsibility_errors();
                 enable_report_form();
