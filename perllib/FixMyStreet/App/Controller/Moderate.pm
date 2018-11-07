@@ -82,7 +82,10 @@ sub moderate_report : Chained('report') : PathPart('') : Args(0) {
             : ()),
         $c->forward('moderate_text', [ 'detail' ]),
         $c->forward('moderate_boolean', [ 'anonymous', 'show_name' ]),
-        $c->forward('moderate_boolean', [ 'photo' ]);
+        $c->forward('moderate_boolean', [ 'photo' ]),
+        $c->forward('moderate_location'),
+        $c->forward('moderate_category'),
+        $c->forward('moderate_extra');
 
     # Deal with possible photo changes. If a moderate form uses a standard
     # photo upload field (with upload_fileid, label and file upload handlers),
@@ -92,7 +95,8 @@ sub moderate_report : Chained('report') : PathPart('') : Args(0) {
     if ($photo_edit_form) {
         $c->forward('/photo/process_photo');
         if ( my $photo_error = delete $c->stash->{photo_error} ) {
-            $c->flash->{photo_error} = $photo_error;
+            $c->flash->{moderate_errors} ||= [];
+            push @{ $c->flash->{moderate_errors} }, $photo_error;
         } else {
             my $fileid = $c->stash->{upload_fileid};
             if ($fileid ne $problem->photo) {
@@ -228,6 +232,59 @@ sub moderate_boolean : Private {
         return $thing;
     }
     return;
+}
+
+sub moderate_extra : Private {
+    my ($self, $c) = @_;
+
+    my $object = $c->stash->{comment} || $c->stash->{problem};
+    my $changed;
+    my @extra = grep { /^extra\./ } keys %{$c->req->params};
+    foreach (@extra) {
+        my ($field_name) = /extra\.(.*)/;
+        my $old = $object->get_extra_metadata($field_name) || '';
+        my $new = $c->get_param($_);
+        if ($new ne $old) {
+            $object->set_extra_metadata($field_name, $new);
+            $changed = 1;
+        }
+    }
+    if ($changed) {
+        $object->update;
+        return 'extra';
+    }
+}
+
+sub moderate_location : Private {
+    my ($self, $c) = @_;
+
+    my $problem = $c->stash->{problem};
+    if ( !$c->forward( '/admin/report_edit_location', [ $problem ] ) ) {
+        # New lat/lon isn't valid, show an error
+        $c->flash->{moderate_errors} ||= [];
+        push @{ $c->flash->{moderate_errors} }, _('Invalid location. New location must be covered by the same council.');
+        return;
+    }
+
+    $problem->update;
+    return 'location';
+}
+
+# No update left at present
+sub moderate_category : Private {
+    my ($self, $c) = @_;
+
+    return unless $c->get_param('category');
+
+    # The admin category editing needs to know all the categories etc
+    $c->forward('/admin/categories_for_point');
+
+    my $problem = $c->stash->{problem};
+    $c->forward( '/admin/report_edit_category', [ $problem, 1 ] );
+    # It might need to set_report_extras in future
+
+    $problem->update;
+    return 'category';
 }
 
 sub update : Chained('report') : PathPart('update') : CaptureArgs(1) {

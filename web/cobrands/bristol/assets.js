@@ -48,7 +48,7 @@ fixmystreet.assets.add($.extend({}, options, {
 fixmystreet.assets.add($.extend({}, options, {
     // wfs_url: "https://confirmdev.eu.ngrok.io/bristol/arcgis/services/ext/datagov/MapServer/WFSServer",
     wfs_url: "https://maps.bristol.gov.uk/arcgis/services/ext/datagov/MapServer/WFSServer",
-    wfs_feature: "ext_datagov:Streetlights",
+    wfs_feature: "Streetlights",
     asset_category: "Street Light",
     asset_item: 'street light',
     asset_id_field: 'Asset_number',

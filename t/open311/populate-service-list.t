@@ -1,4 +1,21 @@
 #!/usr/bin/env perl
+package FixMyStreet::Cobrand::Tester;
+
+use parent 'FixMyStreet::Cobrand::Default';
+
+sub council_area_id { 1 }
+
+
+package FixMyStreet::Cobrand::TesterGroups;
+
+use parent 'FixMyStreet::Cobrand::Default';
+
+sub council_area_id { 1 }
+
+sub enable_category_groups { 1 }
+
+
+package main;
 
 use FixMyStreet::Test;
 use FixMyStreet::DB;
@@ -28,27 +45,38 @@ $bromley->body_areas->find_or_create({
     area_id => 2482
 } );
 
-subtest 'check basic functionality' => sub {
-    FixMyStreet::DB->resultset('Contact')->search( { body_id => 1 } )->delete();
+for my $test (
+    { desc => 'groups not set for new contacts', cobrand => 'tester', groups => 0, delete => 1 },
+    { desc => 'groups set for new contacts', cobrand => 'testergroups', groups => 1, delete => 1},
+    { desc => 'groups removed for existing contacts', cobrand => 'tester', groups => 0, delete => 0 },
+    { desc => 'groups added for existing contacts', cobrand => 'testergroups', groups => 1, delete => 0},
+) {
+    FixMyStreet::override_config {
+        ALLOWED_COBRANDS => [ $test->{cobrand} ],
+    }, sub {
+        subtest 'check basic functionality, ' . $test->{desc} => sub {
+            FixMyStreet::DB->resultset('Contact')->search( { body_id => 1 } )->delete() if $test->{delete};
 
-    my $service_list = get_xml_simple_object( get_standard_xml() );
+            my $service_list = get_xml_simple_object( get_standard_xml() );
 
-    my $processor = Open311::PopulateServiceList->new();
-    $processor->_current_body( $body );
-    $processor->process_services( $service_list );
+            my $processor = Open311::PopulateServiceList->new();
+            $processor->_current_body( $body );
+            $processor->process_services( $service_list );
 
-    my $contact_count = FixMyStreet::DB->resultset('Contact')->search( { body_id => 1 } )->count();
-    is $contact_count, 3, 'correct number of contacts';
+            my $contact_count = FixMyStreet::DB->resultset('Contact')->search( { body_id => 1 } )->count();
+            is $contact_count, 3, 'correct number of contacts';
 
-    for my $test (
-        { code => "001", group => "sanitation" },
-        { code => "002", group => "street" },
-        { code => "003", group => "street" },
-    ) {
-        my $contact = FixMyStreet::DB->resultset('Contact')->search( { body_id => 1, email => $test->{code} } )->first;
-        is $contact->get_extra->{group}, $test->{group}, "Group set correctly";
-    }
-};
+            for my $expects (
+                { code => "001", group => $test->{groups} ? "sanitation" : undef },
+                { code => "002", group => $test->{groups} ? "street" : undef },
+                { code => "003", group => $test->{groups} ? "street" : undef },
+            ) {
+                my $contact = FixMyStreet::DB->resultset('Contact')->search( { body_id => 1, email => $expects->{code} } )->first;
+                is $contact->get_extra->{group}, $expects->{group}, "Group set correctly";
+            }
+        };
+    };
+}
 
 subtest 'check non open311 contacts marked as deleted' => sub {
     FixMyStreet::DB->resultset('Contact')->search( { body_id => 1 } )->delete();

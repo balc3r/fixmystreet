@@ -1,27 +1,39 @@
 ## Releases
 
 * Unreleased
+    - Front end improvements:
+        - Clearer relocation options while you’re reporting a problem #2238
+    - Admin improvements:
+        - Allow moderation to potentially change category. #2320
+    - Open311 improvements:
+        - Fix bug in contact group handling. #2323
+
+* v2.4.2 (6th November 2018)
     - New features:
         - Dashboard now has update CSV export. #2249
         - Allow cobrands to override searching by reference #2271
         - Allow cobrands to limit contact form to abuse reports only
-    - Front end improvements:
-        - Clearer relocation options while you’re reporting a problem #2238
     - Admin improvements:
         - List number of alerts on report page #669
         - viewing and managing of user alerts in admin #676
-        - Allow moderation to potentially change photos. #2291
+        - Allow moderation to potentially change photos/extra info. #2291 #2307
     - Bugfixes:
         - Add perl 5.26/5.28 support.
         - Fix subcategory issues when visiting /report/new directly #2276
         - Give superusers access to update staff dropdowns. #2286
         - Update report areas when moving its location. #2181
+        - Don't send questionnaires for closed reports. #2310
+        - Make sure Open311 send_method always recorded/spotted. #2121
     - Development improvements:
         - Add cobrand hook for dashboard viewing permission. #2285
         - Have body.url work in hashref lookup. #2284
         - OSM based map types can now override zoom levels #2288
+        - Clearer name for navigation colours in SCSS. #2080
+        - `script/setup` now creates `conf/general.yml` for Vagrant when needed.
     - Internal things:
         - Move send-comments code to package for testing. #2109 #2170
+    - Open311 improvements:
+        - Set contact group only if handling cobrand has groups enabled. #2312
 
 * v2.4.1 (2nd October 2018)
     - New features:

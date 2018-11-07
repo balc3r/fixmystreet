@@ -47,7 +47,7 @@ fixmystreet.roadworks.filter = function(feature) {
       categories = ['Damage to pavement', 'Damage to road', 'Faded road markings', 'Damaged Railing, manhole, or drain cover'];
     return OpenLayers.Util.indexOf(categories, category) != -1 &&
     ( OpenLayers.Util.indexOf(valid_types, type) != -1 ||
-      ( type === 'o' && OpenLayers.Util.indexOf(valid_subtypes, subtype) != -1 ) );
+      ( type === 'o' && OpenLayers.Util.indexOf(valid_subtypes, sub_type) != -1 ) );
 };
 
 fixmystreet.roadworks.category_change = function() {
