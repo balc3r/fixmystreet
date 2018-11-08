@@ -66,7 +66,9 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
         },
         not_found: function(layer) {
             fixmystreet.body_overrides.location = null;
-            fixmystreet.body_overrides.remove_only_send();
+            if (fixmystreet.body_overrides.get_only_send() === 'Highways England') {
+                fixmystreet.body_overrides.remove_only_send();
+            }
             $('#highways').remove();
         }
     }

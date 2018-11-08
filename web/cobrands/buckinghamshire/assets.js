@@ -184,9 +184,6 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
     all_categories: true,
     actions: {
         found: function(layer, feature) {
-            if (fixmystreet.body_overrides.get_only_send() === 'Highways England') {
-                return;
-            }
             fixmystreet.body_overrides.allow_send(layer.fixmystreet.body);
             fixmystreet.body_overrides.remove_only_send();
             if (fixmystreet.assets.selectedFeature()) {
@@ -215,10 +212,7 @@ fixmystreet.assets.add($.extend(true, {}, defaults, {
             // unless an asset is selected.
             fixmystreet.body_overrides.do_not_send(layer.fixmystreet.body);
             fixmystreet.body_overrides.remove_only_send();
-            if (fixmystreet.body_overrides.get_only_send() === 'Highways England') {
-                hide_responsibility_errors();
-                enable_report_form();
-            } else if (fixmystreet.assets.selectedFeature()) {
+            if (fixmystreet.assets.selectedFeature()) {
                 fixmystreet.body_overrides.allow_send(layer.fixmystreet.body);
                 hide_responsibility_errors();
                 enable_report_form();
