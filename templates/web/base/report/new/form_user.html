@@ -1,4 +1,4 @@
-<div id="js-private_form">
+<div class="js-hide-if-invalid-category">
 [% IF NOT c.cobrand.social_auth_enabled OR c.user_exists # Not logged in, with social auth, handled in loggedout.html %]
     <div class="hidden-nojs">
         <button id="js-new-report-user-show" class="btn btn--provide-update js-new-report-user-hidden">[% loc('Continue') %]</button>
