@@ -180,6 +180,7 @@ a {
     color: #0BA7D1;
   }
 
+  &:hover,
   &:active {
     text-decoration: underline;
     color: #0D7CCE;
@@ -460,6 +461,9 @@ p.form-error {
     color: white;
     text-decoration: underline;
   }
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 input.form-error,
@@ -548,7 +552,7 @@ ul.error {
   padding: 0.4em;
   border-radius: 0.3em;
 
-  &:focus {
+  &:hover, &:focus {
     text-decoration: none;
     background-color: $nav_fg_hover;
   }
@@ -573,11 +577,21 @@ ul.error {
   a:visited {
     color: #333;
   }
+  a:hover {
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+  }
   span {
     background-color: #ccc;
   }
   span.report-a-problem-btn {
     cursor: pointer;
+  }
+  span.report-a-problem-btn:hover {
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
   }
 }
 
@@ -621,7 +635,7 @@ ul.error {
     white-space: normal;
     border-radius: 0;
 
-    &.hover {
+    &:hover, &.hover {
       text-decoration:none;
       background-color:#333;
       color: #fff !important;
@@ -938,7 +952,7 @@ input.final-submit {
     display: block;
     padding: 0.5em 1em;
   }
-  a:focus, &.hovered a {
+  a:hover, a:focus, &.hovered a {
     background-color: $itemlist_item_background_hover;
     text-decoration: none;
   }
@@ -1020,6 +1034,11 @@ input.final-submit {
     padding-#{$left}: 2.5em; // make space for background image
     border-#{$left}: solid 1em transparent; // inset background image 1em from the left
     background: transparent;
+  }
+
+  // Trigger hover style even when hovering over sibling item-action-button
+  &:hover a {
+    background-color: $itemlist_item_background_hover;
   }
 
   h3 {
@@ -1264,6 +1283,10 @@ input.final-submit {
       background-size: 16px 16px;
       @include svg-background-image('/cobrands/fixmystreet/images/magnify');
     }
+
+    &:hover span {
+      opacity: 1;
+    }
   }
 }
 
@@ -1275,7 +1298,7 @@ input.final-submit {
   padding-bottom: 0.8em;
   border-bottom: 1px solid #eee;
 
-  &:link, &:visited, {
+  &:link, &:visited, &:hover {
     color: #666;
   }
 
@@ -1475,6 +1498,7 @@ html.js #map .noscript {
         font-size: 1em;
         text-align: center;
 
+        &:hover,
         &:focus {
             background-color: #000;
             text-decoration: none;
@@ -1876,7 +1900,7 @@ label .muted {
   background:#ff0000;
   padding:1em;
   color:#fff;
-  a {
+  a, a:hover {
     color:$primary;
   }
 }
@@ -1900,6 +1924,10 @@ label .muted {
     background: $primary;
     padding-#{$left}: 0.5em;
     padding-#{$right}: 0.5em;
+    &:hover {
+      text-decoration:none;
+      background:$primary/1.1;
+    }
   }
 }
 
@@ -1973,6 +2001,9 @@ label .muted {
         color:#fff;
         text-transform:uppercase;
         @include border-radius(0);
+        &:hover {
+          background:#333;
+        }
       }
     }
   }
@@ -1987,6 +2018,10 @@ label .muted {
       size:0.8125em;
     }
     @include border-radius(0 0 0.25em 0.25em);
+    &:hover {
+      text-decoration:none;
+      background:#2a2a2a;
+    }
   }
   a#geolocate_link.loading {
       background: #1a1a1a url("/cobrands/fixmystreet/images/spinner-black.gif") flip(100%,0) 50% no-repeat;
@@ -2125,6 +2160,7 @@ a#geolocate_link.loading, .btn--geolocate.loading {
       text-decoration: underline;
       color: inherit;
 
+      &:hover,
       &:focus {
         text-decoration: none;
         color: #0BA7D1; // default link colour
@@ -2428,6 +2464,14 @@ $nicetable-hover-background: rgba($primary, 0.15) !default;
     &.hover {
         td, th {
             padding: $nicetable-cell-padding;
+        }
+
+        tr:hover {
+            background: $nicetable-hover-background;
+        }
+
+        thead tr:hover {
+            background: transparent;
         }
     }
 
