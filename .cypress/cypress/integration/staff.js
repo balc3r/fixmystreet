@@ -18,7 +18,6 @@ describe('Staff user tests', function() {
         cy.get('[name=pc]').parents('form').submit();
         cy.url().should('include', '/around');
         cy.get('#map_box').click(210, 200);
-        cy.wait('@report-ajax');
         cy.get('[name=form_as]').should('have.value', 'body');
         cy.cleanUpXHR();
     });
