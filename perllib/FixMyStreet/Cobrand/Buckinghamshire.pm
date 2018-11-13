@@ -4,20 +4,14 @@ use parent 'FixMyStreet::Cobrand::UKCouncils';
 use strict;
 use warnings;
 
+use Moo;
+with 'FixMyStreet::Roles::ConfirmValidation';
+
 sub council_area_id { return 2217; }
 sub council_area { return 'Buckinghamshire'; }
 sub council_name { return 'Buckinghamshire County Council'; }
 sub council_url { return 'buckinghamshire'; }
 
-sub report_validation {
-    my ($self, $report, $errors) = @_;
-
-    if ( length( $report->name ) > 50 ) {
-        $errors->{name} = sprintf( _('Names are limited to %d characters in length.'), 50 );
-    }
-
-    return $errors;
-}
 
 sub example_places {
     return ( 'HP19 7QF', "Walton Road" );

@@ -9,21 +9,14 @@ use URI;
 use Try::Tiny;
 use JSON::MaybeXS;
 
+use Moo;
+with 'FixMyStreet::Roles::ConfirmValidation';
+
 sub council_area_id { return 2232; }
 sub council_area { return 'Lincolnshire'; }
 sub council_name { return 'Lincolnshire County Council'; }
 sub council_url { return 'lincolnshire'; }
 sub is_two_tier { 1 }
-
-sub report_validation {
-    my ($self, $report, $errors) = @_;
-
-    if ( length( $report->user->phone ) > 20 ) {
-        $errors->{phone} = sprintf( _('Phone numbers are limited to %s characters in length.'), 20 );
-    }
-
-    return $errors;
-}
 
 sub enable_category_groups { 1 }
 sub send_questionnaires { 0 }
