@@ -81,7 +81,7 @@ sub retrieve_photo {
     my $file = $self->get_file($fileid, $type);
     if ($file->exists) {
         my $photo = $file->slurp_raw;
-        return ($photo, $type);
+        return ($photo, $type, $file);
     }
 }
 
